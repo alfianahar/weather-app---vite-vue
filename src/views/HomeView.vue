@@ -12,19 +12,27 @@
         class="absolute bg-w-secondary text-black w-full shadow-md py-2 px-1 top-[66px]"
         v-if="owSearchResults"
       >
-        <li
-          v-for="searchResult in owSearchResults"
-          :key="searchResult.id"
-          class="py-2 cursor-pointer"
-        >
-          {{
-            searchResult.name +
-            ", " +
-            searchResult.state +
-            ", " +
-            searchResult.country
-          }}
-        </li>
+        <p class="py-2" v-if="searchError">
+          Sorry, something went wrong, please try again
+        </p>
+        <p class="py-2" v-if="!searchError && owSearchResults.length === 0">
+          No results match your query, try a different term.
+        </p>
+        <template v-else>
+          <li
+            v-for="searchResult in owSearchResults"
+            :key="searchResult.id"
+            class="py-2 cursor-pointer"
+          >
+            {{
+              searchResult.name +
+              ", " +
+              searchResult.state +
+              ", " +
+              searchResult.country
+            }}
+          </li>
+        </template>
       </ul>
     </div>
   </main>
@@ -38,16 +46,21 @@ import API_KEY from "../assets/apikey.js";
 const searchQuery = ref("");
 const queryTimeout = ref(null);
 const owSearchResults = ref(null);
+const searchError = ref(null);
 
 const getSearchResults = () => {
   clearTimeout(queryTimeout.value);
   queryTimeout.value = setTimeout(async () => {
     if (searchQuery.value !== "") {
-      const result = await axios.get(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${searchQuery.value},&limit=5&appid=${API_KEY}`
-      );
-      owSearchResults.value = result.data;
-      console.log(owSearchResults.value);
+      try {
+        const result = await axios.get(
+          `http://api.openweathermap.org/geo/1.0/direct?q=${searchQuery.value},&limit=5&appid=${API_KEY}`
+        );
+        owSearchResults.value = result.data;
+        console.log(owSearchResults.value);
+      } catch {
+        searchError.value = true;
+      }
       return;
     }
     owSearchResults.value = null;
