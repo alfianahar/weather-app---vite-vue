@@ -23,6 +23,7 @@
             v-for="searchResult in owSearchResults"
             :key="searchResult.id"
             class="py-2 cursor-pointer"
+            @click="previewCity(searchResult)"
           >
             {{
               searchResult.name +
@@ -41,7 +42,25 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
 import API_KEY from "../assets/apikey.js";
+
+const router = useRouter();
+const previewCity = (searchResult) => {
+  console.log(searchResult);
+  router.push({
+    name: "cityView",
+    params: {
+      state: searchResult.state.replaceAll(" ", ""),
+      city: searchResult.name,
+    },
+    query: {
+      lat: searchResult.lat,
+      lon: searchResult.lon,
+      preview: true,
+    },
+  });
+};
 
 const searchQuery = ref("");
 const queryTimeout = ref(null);
