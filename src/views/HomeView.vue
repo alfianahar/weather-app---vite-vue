@@ -73,7 +73,7 @@ const getSearchResults = () => {
     if (searchQuery.value !== "") {
       try {
         const result = await axios.get(
-          `http://api.openweathermap.org/geo/1.0/direct?q=${searchQuery.value},&limit=5&appid=${API_KEY}`
+          `http://api.openweathermap.org/geo/1.0/direct?q=${searchQuery.value},&limit=5&appid=${API_KEY[0]}`
         );
         owSearchResults.value = result.data;
         console.log(owSearchResults.value);
