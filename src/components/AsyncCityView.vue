@@ -1,5 +1,20 @@
 <template>
-  <div></div>
+  <div class="flex flex-col flex-1 items-center">
+    <!-- Banner -->
+    <div
+      v-if="route.query.preview"
+      class="text-black p-4 bg-w-secondary w-full text-center"
+    >
+      <p>
+        You are currently previewing this city, click the "+" icon to start
+        tracking this city.
+      </p>
+    </div>
+    <!-- Weather Overview -->
+    <div class="flex flex-col items-center text-black py-12">
+      <h1 class="text-4xl mb-2">{{ route.params.city }}</h1>
+    </div>
+  </div>
 </template>
 
 <script setup>
