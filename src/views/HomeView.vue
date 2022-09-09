@@ -6,7 +6,7 @@
         v-model="searchQuery"
         @input="getSearchResults"
         placeholder="Search for a city"
-        class="py-2 px-1 w-full bg-transparent border-b focus:border-w-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#b5c6e0]"
+        class="py-2 px-1 w-full bg-transparent border-b focus:border-gray-600 focus:outline-none focus:shadow-[0px_1px_0_0_#b5c6e0]"
       />
       <ul
         class="absolute bg-w-secondary text-black w-full shadow-md py-2 px-1 top-[66px]"
@@ -22,7 +22,7 @@
           <li
             v-for="searchResult in owSearchResults"
             :key="searchResult.id"
-            class="py-2 cursor-pointer"
+            class="py-2 cursor-pointer border-b border-gray-200"
             @click="previewCity(searchResult)"
           >
             {{
@@ -73,7 +73,7 @@ const getSearchResults = () => {
     if (searchQuery.value !== "") {
       try {
         const result = await axios.get(
-          `http://api.openweathermap.org/geo/1.0/direct?q=${searchQuery.value},&limit=5&appid=${API_KEY[0]}`
+          `http://api.openweathermap.org/geo/1.0/direct?q=${searchQuery.value},&limit=5&appid=07936c430539475e355cebe7e54026ad`
         );
         owSearchResults.value = result.data;
         console.log(owSearchResults.value);
