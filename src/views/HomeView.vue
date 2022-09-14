@@ -51,7 +51,7 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import API_KEY from "../assets/apikey.js";
+// import API_KEY from "../assets/apikey.js";
 import CityList from "../components/CityList.vue";
 import CityCardSkeleton from "../components/CityCardSkeleton.vue";
 
